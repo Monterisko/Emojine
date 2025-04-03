@@ -1,6 +1,7 @@
 import emoji
+import readchar
 
-enabled_emoji = ["right_arrow", "upwards_button", "downwards_button", "left_arrow", "inbox_tray", "repeat_button", "END_arrow"]
+enabled_emoji = ["right_arrow", "upwards_button", "downwards_button", "left_arrow", "inbox_tray", "repeat_button", ":END_arrow:", "outbox_tray"]
 memory = [0]
 pos = 0
 flag = True
@@ -11,7 +12,8 @@ while True:
     for word in words:
         cmd = emoji.demojize(word)
         if enabled_emoji[0] in cmd:
-            memory.append(0)
+            if pos == len(memory) - 1:
+                memory.append(0)
             pos += 1
         if enabled_emoji[1] in cmd:
             memory[pos] += 1
@@ -20,8 +22,13 @@ while True:
         if enabled_emoji[3] in cmd:
             if pos > 0:
                 pos -= 1
+            else:
+                memory.insert(0,0)
         if enabled_emoji[4] in cmd:
             print(chr(memory[pos]))
+        if enabled_emoji[7] in cmd:
+            ch = readchar.readchar()
+            memory[pos] = ord(ch)
         if enabled_emoji[5] in cmd:
             words = []
             while memory[pos] > 0:
@@ -31,7 +38,6 @@ while True:
                     command = input()
                     w = list(command)
                     words += [e for e in w]
-                
                 else:
                     for word in words:
                         cmd = emoji.demojize(word)
@@ -45,9 +51,14 @@ while True:
                         if enabled_emoji[3] in cmd:
                             if pos > 0:
                                 pos -= 1
+                            else:
+                                memory.insert(0,0)
                         if enabled_emoji[4] in cmd:
                             print(chr(memory[pos]))
-
+                        if enabled_emoji[7] in cmd:
+                            ch = readchar.readchar()
+                            memory[pos] = ord(ch)
+                            
         if "no_entry" in cmd:
             print(memory)
             exit(0)
