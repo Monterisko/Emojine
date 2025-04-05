@@ -89,12 +89,11 @@ while True:
         if math_operations[4] in cmd:
             print(memory[pos])
         if enabled_emoji[5] in cmd:
-            words = words[words.index(word):]
-            while memory[pos] > 0:
-                print(words)
+            words = words[words.index(word) + 1:]
+            while memory[pos] != 0:
                 if emoji.emojize(enabled_emoji[6]) in words:
                     flag = False
-                if flag or len(words) == 0:
+                if flag and len(words) == 0:
                     command = input()
                     w = list(command)
                     words += [e for e in w]
@@ -102,7 +101,8 @@ while True:
                     for word in words:
                         cmd = emoji.demojize(word)
                         if enabled_emoji[0] in cmd:
-                            memory.append(0)
+                            if pos == len(memory) - 1:
+                                memory.append(0)
                             pos += 1
                         if enabled_emoji[1] in cmd:
                             memory[pos] += 1
