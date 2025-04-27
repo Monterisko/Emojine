@@ -1,7 +1,7 @@
 import emoji
 import readchar
 
-enabled_emoji = ["right_arrow", "upwards_button", "downwards_button", "left_arrow", "inbox_tray", "repeat_button", ":END_arrow:", "outbox_tray"]
+enabled_emoji = ["right_arrow", "upwards_button", "downwards_button", "left_arrow", "outbox_tray", "repeat_button", ":END_arrow:", "inbox_tray"]
 math_operations = ["plus", "minus", "multiply", "divide", "heavy_equals_sign"]
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 memory = [0]
@@ -84,8 +84,11 @@ while True:
                 words = words[words.index(word):]
                 for i in range(len(words)):
                     if words[i] in numbers:
-                        num += words[i]    
-                memory[pos] //= int(num)
+                        num += words[i] 
+                if int(num) == 0:
+                    pass   
+                else:
+                    memory[pos] //= int(num)
         if math_operations[4] in cmd:
             print(memory[pos])
         if enabled_emoji[5] in cmd:
@@ -171,7 +174,10 @@ while True:
                                 for i in range(len(words)):
                                     if words[i] in numbers:
                                         num += words[i]    
-                                memory[pos] //= int(num)
+                                if int(num) == 0:
+                                    pass   
+                                else:
+                                    memory[pos] //= int(num)
                         if math_operations[4] in cmd:
                             print(memory[pos])
         if "no_entry" in cmd:
